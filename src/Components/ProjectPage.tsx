@@ -89,7 +89,7 @@ function ProjectPage() {
       )}
       <h1>Project</h1>
       {/* <pre>{JSON.stringify(MOCK_PROJECT, null, "")}</pre> */}
-      {projects && <ProjectList projects={projects} onSave={saveProject} />}
+      <ProjectList projects={projects} onSave={saveProject} />
       {!loading && (
         <div className="row">
           <div className="col-sm-12">

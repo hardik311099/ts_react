@@ -5,6 +5,8 @@ interface ProjectDetailProps {
   projects: Project;
 }
 export default function ProjectDetail({ projects }: ProjectDetailProps) {
+  console.log(projects.name);
+
   return (
     <div className="row">
       <div className="col-sm-6">
@@ -14,6 +16,7 @@ export default function ProjectDetail({ projects }: ProjectDetailProps) {
             src={projects.imageUrl}
             alt={projects.name}
           />
+
           <section className="section dark">
             <h3 className="strong">
               <strong>{projects.name}</strong>
@@ -21,10 +24,10 @@ export default function ProjectDetail({ projects }: ProjectDetailProps) {
             <p>{projects.description}</p>
             <p>Budget : {projects.budget}</p>
 
-            <p>Signed: {projects.contractSignedOn.toLocaleDateString()}</p>
+            <p>Signed: {projects.contractSignedOn.toLocaleString()}</p>
             <p>
               <mark className="active">
-                {projects.isActive ? "active" : "inactive"}
+                {projects.isActive ? "Active" : "noActive"}
               </mark>
             </p>
           </section>
