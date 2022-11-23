@@ -11,8 +11,8 @@ function ProjectPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState(1);
-
-  //Approach 2 : using async/await
+  // let id = Number(params.id);
+  // Approach 2 : using async/await
   useEffect(() => {
     async function loadProjects() {
       setLoading(true);
@@ -35,13 +35,39 @@ function ProjectPage() {
     }
     loadProjects();
   }, [currentPage]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   projectAPI
+  //     .find(id)
+  //     .then((d) => {
+  //       setProjects(d);
+  //       setLoading(false);
+  //     })
+  //     .catch((e) => {
+  //       setError(e);
+  //       setLoading(false);
+  //     });
+  // }, [id]);
 
   const saveProject = (project: Project) => {
     // console.log("Saving project:", project);
-    let updatedProjects = projects.map((p: Project) => {
-      return p.id === project.id ? project : p;
-    });
-    setProjects(updatedProjects);
+    // let updatedProjects = projects.map((p: Project) => {
+    //   return p.id === project.id ? project : p;
+    // });
+    // setProjects(updatedProjects);
+    projectAPI
+      .put(project)
+      .then((updateProject) => {
+        let updatedProjects = projects.map((p: Project) => {
+          return p.id === project.id ? new Project(updateProject) : p;
+        });
+        setProjects(updatedProjects);
+      })
+      .catch((e) => {
+        if (e instanceof Error) {
+          setError(e.message);
+        }
+      });
   };
 
   const handleMoreClick = () => {
@@ -63,7 +89,7 @@ function ProjectPage() {
       )}
       <h1>Project</h1>
       {/* <pre>{JSON.stringify(MOCK_PROJECT, null, "")}</pre> */}
-      <ProjectList projects={projects} onSave={saveProject} />
+      {projects && <ProjectList projects={projects} onSave={saveProject} />}
       {!loading && (
         <div className="row">
           <div className="col-sm-12">
