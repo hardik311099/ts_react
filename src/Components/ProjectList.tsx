@@ -7,13 +7,16 @@ interface ProjectListProps {
   projects: Project[];
 }
 
+const handleEdit = (project: Project) => {
+  console.log(project);
+};
 function ProjectList({ projects }: ProjectListProps) {
   //   return <pre>{JSON.stringify(projects, null, "")}</pre>;
   return (
     <ul className="row">
       {projects.map((project) => (
         <div key={project.id} className="cols-sm">
-          <ProjectCard project={project} />
+          <ProjectCard onEdit={handleEdit} project={project} />
           <ProjectFrom />
         </div>
       ))}
