@@ -1,5 +1,6 @@
 import React from "react";
 import { MOCK_PROJECT } from "./MockProject";
+
 import ProjectList from "./ProjectList";
 
 function ProjectPage() {
