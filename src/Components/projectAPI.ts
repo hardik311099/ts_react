@@ -32,13 +32,13 @@ function parseJSON(response: Response) {
   return response.json();
 }
 
-// function delay(ms: number) {
-//   return function (x: any): Promise<any> {
-//     return new Promise((resolve) => {
-//       setTimeout(() => resolve(x), ms);
-//     });
-//   };
-// }
+function delay(ms: number) {
+  return function (x: any): Promise<any> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(x), ms);
+    });
+  };
+}
 
 function convertToProjectModels(data: any[]): Project[] {
   let projects: Project[] = data.map(convertToProjectModel);
@@ -51,19 +51,17 @@ function convertToProjectModel(item: any): Project {
 
 const projectAPI = {
   get(page = 1, limit = 20) {
-    return (
-      fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
-        // .then(delay(600))
-        .then(checkStatus)
-        .then(parseJSON)
-        .then(convertToProjectModels)
-        .catch((error: TypeError) => {
-          console.log("log client error" + error);
-          throw new Error(
-            "There was an error retrieving the projects. Please try again."
-          );
-        })
-    );
+    return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
+      .then(delay(10))
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(convertToProjectModels)
+      .catch((error: TypeError) => {
+        console.log("log client error" + error);
+        throw new Error(
+          "There was an error retrieving the projects. Please try again."
+        );
+      });
   },
 
   put(project: Project) {
